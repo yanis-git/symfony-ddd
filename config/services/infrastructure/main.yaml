@@ -1,4 +1,5 @@
 imports:
   - { resource: "generic.yaml" }
+  - { resource: "event.yaml" }
 
 services:

@@ -1,0 +1,7 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  Domain\Core\Repository\EventRepositoryInterface: '@Infrastructure\Repository\Event\EventRepository'
+  Domain\Core\Event\EventManagerInterface: '@Infrastructure\Service\Event\EventManager'

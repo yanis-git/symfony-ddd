@@ -13,6 +13,15 @@ framework:
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
 
+        default_bus: internal_bus
+        buses:
+            internal_bus:
+                middleware:
+                    - 'Infrastructure\Middleware\Internal\PublishEventsMiddleware'
+            event_bus:
+                default_middleware: allow_no_handlers
+                middleware:
+                    - 'Infrastructure\Middleware\Event\EventLoggerMiddleware'
 # when@test:
 #    framework:
 #        messenger:
