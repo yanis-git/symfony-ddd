@@ -1,0 +1,19 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  Infrastructure\:
+    resource: '../../../src/Infrastructure/*'
+    exclude: '../../../src/Infrastructure/{DependencyInjection,Entity,Migrations,Tests,DTO,Kernel.php}'
+
+  Infrastructure\Action\:
+    resource: '../../../src/Infrastructure/Action'
+    tags: ['controller.service_arguments']
+
+  App\DataFixtures\:
+    resource: '../../../src/DataFixtures'
+
+  Migration\:
+    resource: '../../../src/Migration/*'
+    exclude: '../../../src/Migration/{Migrations,Service}'
