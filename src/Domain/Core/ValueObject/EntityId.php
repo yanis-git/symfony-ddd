@@ -3,8 +3,8 @@
 namespace Domain\Core\ValueObject;
 
 use Domain\Core\Contract\EntityIdInterface;
+use InvalidArgumentException;
 use JsonSerializable;
-use LogicException;
 use Symfony\Component\Uid\Uuid;
 
 abstract class EntityId implements EntityIdInterface, JsonSerializable
@@ -21,7 +21,7 @@ abstract class EntityId implements EntityIdInterface, JsonSerializable
     public static function fromString(string $uuid): static
     {
         if (!static::isValid($uuid)) {
-            throw new LogicException(sprintf('%s is not valid UUID', $uuid));
+            throw new InvalidArgumentException(sprintf('%s is not valid UUID', $uuid));
         }
 
         return new static($uuid);
