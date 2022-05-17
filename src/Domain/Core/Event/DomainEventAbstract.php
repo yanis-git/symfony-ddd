@@ -16,10 +16,7 @@ abstract class DomainEventAbstract implements DomainEventInterface
 
     protected string $eventName;
 
-    /**
-     * @var string
-     */
-    protected $eventClass;
+    protected string $eventClass;
 
     protected DateTimeImmutable $createdAt;
 
