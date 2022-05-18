@@ -7,6 +7,6 @@ beforeEach(function () {
     $this->eventId = EventId::generate();
 });
 
-it('Should be instance of EntityId', function () {
+it('Should be instance of Entity Id', function () {
     expect($this->eventId)->toBeInstanceOf(EntityId::class);
 });

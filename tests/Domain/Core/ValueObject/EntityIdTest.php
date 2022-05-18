@@ -9,7 +9,7 @@ beforeEach(function () {
     $this->elementId = ElementId::fromString($this->uuid);
 });
 
-it('Should be able to create an EntityId from a string', function () {
+it('Should be able to create an Entity Id from a string', function () {
     expect((string) $this->elementId)->toBe($this->uuid);
 });
 
@@ -17,7 +17,7 @@ it('Should be serializable', function () {
     expect(json_encode($this->elementId))->toBe(json_encode($this->uuid));
 });
 
-it('Should throw Exception when fromString is call with invalid uuid', function () {
+it('Should throw Exception when from String is call with invalid uuid', function () {
     expect(fn() => ElementId::fromString('invalid-uuid'))
         ->toThrow(InvalidArgumentException::class, 'invalid-uuid is not valid UUID');
 });
@@ -28,7 +28,7 @@ it('Should validate the uuid format', function () {
     expect(ElementId::isValid($this->uuid))->toBe(true);
 });
 
-it('Should be able to compare two EntityIds', function () {
+it('Should be able to compare two Entity Ids', function () {
     $otherElementId = ElementId::fromString($this->uuid);
     expect($this->elementId->equals($otherElementId))->toBe(true);
 });
@@ -38,7 +38,7 @@ it('Should be able to generate valid UUID', function () {
     expect(ElementId::isValid($uuid))->toBe(true);
 });
 
-it('Should implement EntityIdInterface', function () {
+it('Should implement Entity Id Interface', function () {
     expect($this->elementId)->toBeInstanceOf(EntityIdInterface::class);
 });
 

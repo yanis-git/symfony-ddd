@@ -14,7 +14,7 @@ beforeEach(function () {
 });
 
 
-it('Should have DomainEventInterface type', fn() => expect($this->userWasCreated)->toBeInstanceOf(DomainEventInterface::class));
+it('Should have Domain Event Interface type', fn() => expect($this->userWasCreated)->toBeInstanceOf(DomainEventInterface::class));
 it('Should have it own event UUID', fn() => expect(Uuid::isValid($this->userWasCreated->getEventId()))->toBe(true));
 it('Should have Version 1 by default', fn() => expect($this->userWasCreated->getVersion())->toBe('1.0'));
 it('Should have creation date', fn() =>
@@ -22,7 +22,7 @@ it('Should have creation date', fn() =>
         ->toBe((new DateTime())->format('Y-m-d hh:mm:ss'))
 );
 it('Should have it own Event class', fn() => expect($this->userWasCreated->getEventClass())->toBe(UserWasCreatedEvent::class));
-
+it('Should have it own Event name', fn() => expect($this->userWasCreated->getEventName())->toBe('UserWasCreated'));
 
 
 class UserId extends EntityId { }
@@ -41,7 +41,7 @@ class User extends AggregateRootAbstract {
 class UserWasCreatedEvent extends DomainEventAbstract {
 
     public function __construct(private readonly EntityIdInterface $userId) {
-        parent::__construct('UserWasCreatedEvent');
+        parent::__construct('UserWasCreated');
     }
 
     public function getAggregateId(): EntityIdInterface
