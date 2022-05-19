@@ -2,7 +2,6 @@
 
 namespace Domain\Core\Event;
 
-use Domain\Core\ValueObject\EventId;
 use Domain\Core\Entity\EntityIdInterface;
 
 interface DomainEvent

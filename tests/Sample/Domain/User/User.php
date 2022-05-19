@@ -4,6 +4,7 @@ namespace App\Tests\Sample\Domain\User;
 
 use Domain\Core\Aggregate\AggregateRootAbstract;
 use Domain\Core\Contract\EntityIdInterface;
+use Exception;
 
 class User extends AggregateRootAbstract
 {
@@ -12,6 +13,9 @@ class User extends AggregateRootAbstract
         parent::__construct($userId);
     }
 
+    /**
+     * @throws Exception
+     */
     public static function create(): User
     {
         $user = new User(UserId::generate());
