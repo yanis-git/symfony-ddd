@@ -11,7 +11,7 @@ beforeEach(function () {
 
 it('should implement Domain Entity Interface', fn() => expect($this->user)->toBeInstanceOf(DomainEntityInterface::class));
 it('should return not have any events by default', function() {
- expect(iterator_count($this->user->getRecordedEvents()->getIterator()))
+ expect(count($this->user->getRecordedEvents()))
      ->toBe(0)
      ->and($this->user->hasEvents())
      ->toBe(false)
@@ -19,7 +19,7 @@ it('should return not have any events by default', function() {
 });
 it ('should be able to record events', function() {
     $user = User::create();
-    expect(iterator_count($user->getRecordedEvents()->getIterator()))
+    expect(count($user->getRecordedEvents()))
         ->toBe(1)
         ->and($user->hasEvents())
         ->toBe(true)
@@ -38,7 +38,7 @@ it('should be able to serialize', function() {
 it('should be able to clear the recorded events', function() {
     $user = User::create();
     $user->clearRecordedEvents();
-    expect(iterator_count($user->getRecordedEvents()->getIterator()))
+    expect(count($user->getRecordedEvents()))
         ->toBe(0)
         ->and($this->user->hasEvents())
         ->toBe(false)

@@ -2,22 +2,13 @@
 
 namespace Domain\Core\Event;
 
-use IteratorAggregate;
-use Traversable;
+use ArrayAccess;
+use ArrayIterator;
 
-class DomainEvents implements IteratorAggregate
+class DomainEvents extends ArrayIterator implements ArrayAccess
 {
-    /**
-     * DomainEvents constructor.
-     */
-    public function __construct(private readonly array $events)
+    public function __construct(array $events = [])
     {
-    }
-
-    public function getIterator(): Traversable
-    {
-        foreach ($this->events as $device => $property) {
-            yield $device => $property;
-        }
+        parent::__construct($events);
     }
 }
