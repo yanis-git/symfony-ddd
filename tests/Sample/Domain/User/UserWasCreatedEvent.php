@@ -8,7 +8,7 @@ use Domain\Core\Event\DomainEventAbstract;
 class UserWasCreatedEvent extends DomainEventAbstract {
 
     public function __construct(private readonly EntityIdInterface $userId) {
-        parent::__construct('UserWasCreated');
+        parent::__construct();
     }
 
     public function getAggregateId(): EntityIdInterface

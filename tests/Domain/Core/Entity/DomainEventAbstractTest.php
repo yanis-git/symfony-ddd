@@ -21,4 +21,4 @@ it('Should have creation date', fn() =>
         ->toBe((new DateTime())->format('Y-m-d hh:mm:ss'))
 );
 it('Should have it own Event class', fn() => expect($this->userWasCreated->getEventClass())->toBe(UserWasCreatedEvent::class));
-it('Should have it own Event name', fn() => expect($this->userWasCreated->getEventName())->toBe('UserWasCreated'));
+it('Should have it own Event name', fn() => expect($this->userWasCreated->getEventName())->toBe('UserWasCreatedEvent'));

@@ -7,3 +7,6 @@ setup:
 
 test:
 	vendor/bin/pest tests
+
+coverage:
+	php -d xdebug.mode=coverage vendor/bin/pest --coverage

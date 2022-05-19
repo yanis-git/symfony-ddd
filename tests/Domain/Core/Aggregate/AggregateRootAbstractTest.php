@@ -44,3 +44,7 @@ it('should be able to clear the recorded events', function() {
         ->toBe(false)
     ;
 });
+
+it('should return uuid when we cast to string', function() {
+    expect((string)$this->user)->toBe('6eadc797-c7a8-4c8c-b20d-71c8017c9163');
+});
