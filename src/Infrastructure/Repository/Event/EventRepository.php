@@ -14,7 +14,6 @@ use Infrastructure\Entity\Event\Event;
 use Infrastructure\Transformer\Event\EventTransformer;
 use LogicException;
 
-
 /**
  * @method Event|null find($id, $lockMode = null, $lockVersion = null)
  * @method Event|null findOneBy(array $criteria, array $orderBy = null)
@@ -26,8 +25,7 @@ class EventRepository extends ServiceEntityRepository implements EventRepository
     public function __construct(
         ManagerRegistry $registry,
         private readonly EventTransformer $eventTransformer,
-    )
-    {
+    ) {
         parent::__construct($registry, Event::class);
     }
 

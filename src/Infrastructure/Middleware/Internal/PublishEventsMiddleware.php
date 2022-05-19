@@ -13,13 +13,12 @@ use Throwable;
 
 class PublishEventsMiddleware implements MiddlewareInterface
 {
-
-
     public function __construct(
         private readonly EventPersister         $eventPersister,
         private readonly EventPublisher         $eventPublisher,
         private readonly EntityManagerInterface $entityManager,
-    ) { }
+    ) {
+    }
 
     /**
      * @param Envelope       $envelope
@@ -64,4 +63,3 @@ class PublishEventsMiddleware implements MiddlewareInterface
         return $result;
     }
 }
-

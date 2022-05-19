@@ -11,7 +11,8 @@ class EventPublisher
     public function __construct(
         private readonly EventManagerInterface $eventManager,
         private readonly MessageBusInterface $eventBus,
-    ) { }
+    ) {
+    }
 
     public function publishEvents(): void
     {

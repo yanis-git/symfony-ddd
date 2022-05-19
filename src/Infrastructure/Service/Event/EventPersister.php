@@ -8,11 +8,11 @@ use Domain\Core\Repository\EventRepositoryInterface;
 
 class EventPersister
 {
-
     public function __construct(
         private readonly EventManagerInterface $eventManager,
         private readonly EventRepositoryInterface $eventRepository,
-    ) { }
+    ) {
+    }
 
     public function hasEvents(): bool
     {

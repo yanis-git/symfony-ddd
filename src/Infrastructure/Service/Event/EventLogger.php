@@ -1,4 +1,5 @@
 <?php
+
 namespace Infrastructure\Service\Event;
 
 use Domain\Core\Contract\DomainEventInterface;

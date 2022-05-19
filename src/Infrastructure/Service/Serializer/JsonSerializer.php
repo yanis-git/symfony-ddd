@@ -40,14 +40,16 @@ class JsonSerializer
 
     private function getJsonSerializer(): Serializer
     {
-        return new Serializer([
+        return new Serializer(
+            [
             new DateTimeNormalizer(),
             new PropertyNormalizer(),
             new ObjectNormalizer(),
         ],
-        [
+            [
             new JsonEncoder(),
-        ]);
+        ]
+        );
     }
 
     /**
