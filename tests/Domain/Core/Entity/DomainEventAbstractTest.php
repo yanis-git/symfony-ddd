@@ -1,10 +1,9 @@
 <?php
 
-use Domain\Core\Aggregate\AggregateRootAbstract;
+use App\Tests\Sample\Domain\User\User;
+use App\Tests\Sample\Domain\User\UserId;
+use App\Tests\Sample\Domain\User\UserWasCreatedEvent;
 use Domain\Core\Contract\DomainEventInterface;
-use Domain\Core\Contract\EntityIdInterface;
-use Domain\Core\Event\DomainEventAbstract;
-use Domain\Core\ValueObject\EntityId;
 use Symfony\Component\Uid\Uuid;
 
 beforeEach(function () {
@@ -23,34 +22,3 @@ it('Should have creation date', fn() =>
 );
 it('Should have it own Event class', fn() => expect($this->userWasCreated->getEventClass())->toBe(UserWasCreatedEvent::class));
 it('Should have it own Event name', fn() => expect($this->userWasCreated->getEventName())->toBe('UserWasCreated'));
-
-
-class UserId extends EntityId { }
-
-class User extends AggregateRootAbstract {
-    public function __construct(EntityIdInterface $userId)
-    {
-        parent::__construct($userId);
-    }
-    public function jsonData(): array
-    {
-        return [];
-    }
-}
-
-class UserWasCreatedEvent extends DomainEventAbstract {
-
-    public function __construct(private readonly EntityIdInterface $userId) {
-        parent::__construct('UserWasCreated');
-    }
-
-    public function getAggregateId(): EntityIdInterface
-    {
-        return $this->userId;
-    }
-
-    public function getAggregateClassName(): string
-    {
-        return User::class;
-    }
-}
