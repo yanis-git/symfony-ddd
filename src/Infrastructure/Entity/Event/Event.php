@@ -23,8 +23,6 @@ class Event
     private int $id;
     #[ORM\Column(name: 'uuid', type: 'guid', length: 36, unique: true, options: ['index' => true])]
     private string $uuid;
-    #[ORM\Column(name: 'user_uuid', type: 'guid', length: 36, unique: true, options: ['index' => true])]
-    private ?string $userUuid = null;
     #[ORM\Column(type: 'guid', length: 36, nullable: false)]
     private string $aggregateId;
     #[ORM\Column(type: 'text', nullable: false)]
@@ -51,18 +49,6 @@ class Event
     public function setUuid(string $uuid): self
     {
         $this->uuid = $uuid;
-
-        return $this;
-    }
-
-    public function getUserUuid(): ?string
-    {
-        return $this->userUuid;
-    }
-
-    public function setUserUuid(?string $userUuid): self
-    {
-        $this->userUuid = $userUuid;
 
         return $this;
     }
