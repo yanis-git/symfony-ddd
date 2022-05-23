@@ -15,7 +15,7 @@ beforeEach(function () {
 
 it('Should have Domain Event Interface type', fn() => expect($this->userWasCreated)->toBeInstanceOf(DomainEventInterface::class));
 it('Should have it own event UUID', fn() => expect(Uuid::isValid($this->userWasCreated->getEventId()))->toBe(true));
-it('Should have Version 1 by default', fn() => expect($this->userWasCreated->getVersion())->toBe('1.0'));
+it('Should have Version 1 by default', fn() => expect((string) $this->userWasCreated->getVersion())->toBe('1.0'));
 it('Should have creation date', fn() =>
     expect($this->userWasCreated->getCreatedAt()->format('Y-m-d hh:mm:ss'))
         ->toBe((new DateTime())->format('Y-m-d hh:mm:ss'))

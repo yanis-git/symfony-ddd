@@ -8,21 +8,13 @@ use Exception;
 
 abstract class DomainEventAbstract implements DomainEventInterface
 {
-    public const API_VERSION = '1.0';
-
     protected EventId $eventId;
-
-    protected string $version;
-
+    protected Version $version;
     protected string $eventName;
-
     protected string $eventClass;
-
     protected DateTimeImmutable $createdAt;
 
     /**
-     * DomainEventAbstract constructor.
-     *
      * @throws Exception
      */
     public function __construct(string $eventName = '')
@@ -31,7 +23,7 @@ abstract class DomainEventAbstract implements DomainEventInterface
         $this->eventName = $this->generateEventName($eventName);
         $this->eventClass = $this::class;
         $this->createdAt = new DateTimeImmutable();
-        $this->version = self::API_VERSION;
+        $this->version = Version::default();
     }
 
     private function generateEventName(string $eventName): string
@@ -47,6 +39,7 @@ abstract class DomainEventAbstract implements DomainEventInterface
      * Copy from Symfony maker str.
      *
      * @param $fullClassName
+     * @return string
      */
     public static function getShortClassName($fullClassName): string
     {
@@ -75,7 +68,7 @@ abstract class DomainEventAbstract implements DomainEventInterface
         return $this->eventName;
     }
 
-    public function getVersion(): string
+    public function getVersion(): Version
     {
         return $this->version;
     }
