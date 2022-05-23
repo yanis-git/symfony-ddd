@@ -36,7 +36,7 @@ class EventManager implements EventManagerInterface
     {
         /** @var AggregateRootAbstract $aggregate */
         foreach ($this->aggregates as $aggregate) {
-            $events = $aggregate->getRecordedEvents()->getIterator();
+            $events = $aggregate->getRecordedEvents();
 
             /** @var DomainEventInterface $event */
             foreach ($events as $event) {
