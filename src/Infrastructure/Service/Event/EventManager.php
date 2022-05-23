@@ -25,27 +25,11 @@ class EventManager implements EventManagerInterface
         return $this->aggregates;
     }
 
-    public function detach(AggregateRootAbstract $aggregate): void
+    public function detach(AggregateRootAbstract $aggregateRoot): void
     {
-        if (!empty($this->aggregates[(string)$aggregate->getUuid()])) {
-            unset($this->aggregates[(string)$aggregate->getUuid()]);
+        $uuid = (string)$aggregateRoot->getUuid();
+        if (!empty($this->aggregates[$uuid])) {
+            unset($this->aggregates[$uuid]);
         }
-    }
-
-    public function hasEvent(string $eventName): bool
-    {
-        /** @var AggregateRootAbstract $aggregate */
-        foreach ($this->aggregates as $aggregate) {
-            $events = $aggregate->getRecordedEvents();
-
-            /** @var DomainEventInterface $event */
-            foreach ($events as $event) {
-                if ($event->getEventName() === $eventName) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
     }
 }

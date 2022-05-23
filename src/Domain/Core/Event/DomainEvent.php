@@ -19,6 +19,4 @@ interface DomainEvent
     public function getEventClass(): string;
 
     public function getMeta(): array;
-
-//    public function getPayload();
 }

@@ -2,7 +2,6 @@
 
 use App\Tests\Sample\Domain\User\User;
 use App\Tests\Sample\Domain\User\UserId;
-use Domain\Core\Aggregate\AggregateRootAbstract;
 use Infrastructure\Service\Event\EventManager;
 
 beforeEach(function () {

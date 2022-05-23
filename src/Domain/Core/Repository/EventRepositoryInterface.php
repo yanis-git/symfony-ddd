@@ -8,7 +8,7 @@ use Domain\Core\Event\EventId;
 
 interface EventRepositoryInterface
 {
-    public function persist(DomainEvents $domainEvents, ?string $userUuid = null): void;
+    public function persist(DomainEvents $domainEvents): void;
 
     public function fetch(int $page, int $countPerPage): array;
 

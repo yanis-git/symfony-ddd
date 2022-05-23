@@ -12,7 +12,7 @@ class EventTransformer
     {
     }
 
-    public function fromDomain(DomainEventInterface $event, ?string $userUuid): Event
+    public function fromDomain(DomainEventInterface $event): Event
     {
         return (new Event())
             ->setAggregateClass($event->getAggregateClassName())
@@ -22,7 +22,7 @@ class EventTransformer
             ->setEventName($event->getEventName())
             ->setPayload($this->serializer->serialize($event))
             ->setVersion($event->getVersion())
-            ->setUserUuid($userUuid);
+        ;
     }
 
 

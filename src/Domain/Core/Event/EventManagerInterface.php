@@ -25,6 +25,4 @@ interface EventManagerInterface
      * stop track for an aggregate
      */
     public function detach(AggregateRootAbstract $aggregateRoot);
-
-    public function hasEvent(string $eventName): bool;
 }

@@ -29,10 +29,10 @@ class EventRepository extends ServiceEntityRepository implements EventRepository
         parent::__construct($registry, Event::class);
     }
 
-    public function persist(DomainEvents $domainEvents, ?string $userUuid = null): void
+    public function persist(DomainEvents $domainEvents): void
     {
         foreach ($domainEvents as $domainEvent) {
-            $eventEntity = $this->eventTransformer->fromDomain($domainEvent, $userUuid);
+            $eventEntity = $this->eventTransformer->fromDomain($domainEvent);
             $this->_em->persist($eventEntity);
         }
     }
