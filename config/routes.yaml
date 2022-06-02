@@ -1,0 +1,3 @@
+test:
+  path: /
+  controller: Infrastructure\Action\TestAction

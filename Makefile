@@ -10,3 +10,6 @@ test:
 
 coverage:
 	php -d xdebug.mode=coverage vendor/bin/pest --coverage
+
+serve:
+	symfony server:start
