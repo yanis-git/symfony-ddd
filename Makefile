@@ -13,3 +13,6 @@ coverage:
 
 serve:
 	symfony server:start
+
+analyze:
+	php vendor/bin/phpstan analyse --level=max --no-progress --no-interaction src

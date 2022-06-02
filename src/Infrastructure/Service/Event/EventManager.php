@@ -8,6 +8,7 @@ use Domain\Core\Event\EventManagerInterface;
 
 class EventManager implements EventManagerInterface
 {
+    /** @var array<string, AggregateRootAbstract>  */
     private array $aggregates = [];
 
     public function persist(AggregateRootAbstract $aggregateRoot): void
@@ -20,6 +21,9 @@ class EventManager implements EventManagerInterface
         $this->aggregates = [];
     }
 
+    /**
+     * @return array<string, AggregateRootAbstract>
+     */
     public function getAggregates(): array
     {
         return $this->aggregates;

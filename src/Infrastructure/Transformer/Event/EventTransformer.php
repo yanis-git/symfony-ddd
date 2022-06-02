@@ -28,6 +28,8 @@ class EventTransformer
 
     public function toDomain(Event $event): DomainEventInterface
     {
-        return $this->serializer->deserialize($event->getPayload(), $event->getEventClass());
+        /** @var DomainEventInterface $domainEvent */
+        $domainEvent = $this->serializer->deserialize($event->getPayload(), $event->getEventClass());
+        return $domainEvent;
     }
 }

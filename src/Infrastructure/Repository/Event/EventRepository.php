@@ -15,6 +15,7 @@ use Infrastructure\Transformer\Event\EventTransformer;
 use LogicException;
 
 /**
+ * @extends ServiceEntityRepository<Event>
  * @method Event|null find($id, $lockMode = null, $lockVersion = null)
  * @method Event|null findOneBy(array $criteria, array $orderBy = null)
  * @method Event[]    findAll()
@@ -36,13 +37,16 @@ class EventRepository extends ServiceEntityRepository implements EventRepository
             $this->_em->persist($eventEntity);
         }
     }
-
+    /**
+     * @return array<Event>
+     */
     public function fetch(int $page, int $countPerPage): array
     {
         $qb = $this->createQueryBuilder('m');
         $qb->select()->setMaxResults($countPerPage)->setFirstResult(($page - 1) * $countPerPage);
-
-        return $qb->getQuery()->getResult();
+        /** @var array<Event> $result */
+        $result = $qb->getQuery()->getResult();
+        return $result;
     }
 
     /**
@@ -54,9 +58,8 @@ class EventRepository extends ServiceEntityRepository implements EventRepository
     }
 
     /**
-     * @return mixed
-     *
-     * @throws Exception
+     * @param EventId $eventId
+     * @return DomainEventInterface
      */
     public function get(EventId $eventId): DomainEventInterface
     {
@@ -69,17 +72,20 @@ class EventRepository extends ServiceEntityRepository implements EventRepository
         return $this->eventTransformer->toDomain($event);
     }
 
-    public function fetchByUuids(array $eventIds): DomainEvents
+    /**
+     * @param array<string> $eventUuids
+     */
+    public function fetchByUuids(array $eventUuids): DomainEvents
     {
-        $events = $this->findBy(['uuid' => $eventIds]);
+        $events = $this->findBy(['uuid' => $eventUuids]);
         // return directly entity event because we do not have a way to transform it to domain
         return new DomainEvents($events);
     }
 
     /**
-     * @return array
+     * @return array<Event>
      */
-    public function fetchByVersion(string $version)
+    public function fetchByVersion(string $version): array
     {
         return $this->findBy(['version' => $version]);
     }

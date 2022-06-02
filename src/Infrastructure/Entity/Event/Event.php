@@ -105,7 +105,7 @@ class Event
      * Gets triggered only on insert.
      */
     #[ORM\PrePersist]
-    public function onPrePersist()
+    public function onPrePersist(): void
     {
         $this->createdAt = new DateTime('now');
         $this->updatedAt = new DateTime('now');
@@ -115,7 +115,7 @@ class Event
      * Gets triggered only on update.
      */
     #[ORM\PreUpdate]
-    public function onPreUpdate()
+    public function onPreUpdate(): void
     {
         $this->updatedAt = new DateTime('now');
     }

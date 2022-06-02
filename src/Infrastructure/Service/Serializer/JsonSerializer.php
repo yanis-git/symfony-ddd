@@ -12,11 +12,11 @@ use Symfony\Component\Serializer\Serializer;
 class JsonSerializer
 {
     /**
-     * @param $data
+     * @param object $data
      * @return string
      * @throws JsonException
      */
-    public function serialize($data): string
+    public function serialize(object $data): string
     {
         return $this->preparePayloadData($data);
     }
@@ -26,16 +26,17 @@ class JsonSerializer
      */
     private function preparePayloadData(object $data): string
     {
-        $data = $this->getJsonSerializer()->serialize($data, 'json', ['json_encode_options' => JSON_INVALID_UTF8_IGNORE]);
-        $data = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
+        $stringifiesData = $this->getJsonSerializer()->serialize($data, 'json', ['json_encode_options' => JSON_INVALID_UTF8_IGNORE]);
+        /** @var array<mixed> $payload */
+        $payload = json_decode($stringifiesData, true, 512, JSON_THROW_ON_ERROR);
 
         //ensure that all string in payload are encoded to utf-8
-        array_walk_recursive($data, function (&$value) {
+        array_walk_recursive($payload, function (&$value) {
             if (is_string($value)) {
                 $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
             }
         });
-        return json_encode($data, JSON_THROW_ON_ERROR);
+        return json_encode($payload, JSON_THROW_ON_ERROR);
     }
 
     private function getJsonSerializer(): Serializer
@@ -52,14 +53,10 @@ class JsonSerializer
         );
     }
 
-    /**
-     * @param $data
-     * @param $class
-     *
-     * @return object
-     */
-    public function deserialize($data, $class)
+    public function deserialize(string $data, string $class): object
     {
-        return $this->getJsonSerializer()->deserialize($data, $class, 'json');
+        /** @var object $object */
+        $object = $this->getJsonSerializer()->deserialize($data, $class, 'json');
+        return $object;
     }
 }

@@ -8,6 +8,9 @@ use Domain\Core\Event\DomainEvents;
 
 abstract class AggregateRootAbstract extends DomainEntityAbstract
 {
+    /**
+     * @var DomainEventInterface[]
+     */
     private array $domainEvents = [];
 
     protected function recordEvent(DomainEventInterface $event): void
