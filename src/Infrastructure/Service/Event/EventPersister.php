@@ -39,11 +39,7 @@ class EventPersister
          */
         foreach ($aggregates as $aggregate) {
             foreach ($aggregate->getRecordedEvents() as $event) {
-                $eventId = (string)$event->getEventId();
-                /*
-                 * sometimes we are getting error for duplicate event uuid in db flush specially on publication hard delete,
-                 * to avoid this, make indexed array by event uuid to be sure that for each uuid we have only one event.
-                 */
+                $eventId = (string) $event->getEventId();
                 $events[$eventId] = $event;
             }
         }
