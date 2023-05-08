@@ -28,4 +28,5 @@ jobs:
         run: |
           make setup
           make lint
+          make analyse
           make test

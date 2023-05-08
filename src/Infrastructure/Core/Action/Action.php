@@ -22,10 +22,11 @@ abstract class Action implements ServiceSubscriberInterface
 
     protected function getRouter(): RouterInterface
     {
+        /** @var RouterInterface */
         return $this->container->get('router');
     }
 
-    protected function query($query)
+    protected function query(object $query): mixed
     {
         $envelop = $this->getMessageBus()->dispatch($query);
         /** @var HandledStamp $stamp */
@@ -37,10 +38,11 @@ abstract class Action implements ServiceSubscriberInterface
 
     protected function getMessageBus(): MessageBusInterface
     {
+        /** @var MessageBusInterface */
         return $this->container->get('internal_bus');
     }
 
-    protected function command($command)
+    protected function command(object $command): mixed
     {
         $envelop = $this->getMessageBus()->dispatch($command);
         /** @var HandledStamp $stamp */

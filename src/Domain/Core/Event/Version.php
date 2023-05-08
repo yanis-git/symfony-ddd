@@ -8,7 +8,7 @@ class Version
 {
     public const DEFAULT_VERSION = '1.0';
 
-    public function __construct(private readonly string $version)
+    final public function __construct(private readonly string $version)
     {
         $this->assertVersion();
     }

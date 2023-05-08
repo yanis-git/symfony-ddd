@@ -15,6 +15,7 @@ use Infrastructure\Transformer\Event\EventTransformer;
 use LogicException;
 
 /**
+ * @implements EventRepositoryInterface<Event>
  * @extends ServiceEntityRepository<Event>
  * @method Event|null find($id, $lockMode = null, $lockVersion = null)
  * @method Event|null findOneBy(array $criteria, array $orderBy = null)
@@ -72,9 +73,6 @@ class EventRepository extends ServiceEntityRepository implements EventRepository
         return $this->eventTransformer->toDomain($event);
     }
 
-    /**
-     * @param array<string> $eventUuids
-     */
     public function fetchByUuids(array $eventUuids): DomainEvents
     {
         $events = $this->findBy(['uuid' => $eventUuids]);

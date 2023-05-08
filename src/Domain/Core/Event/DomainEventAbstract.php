@@ -38,10 +38,10 @@ abstract class DomainEventAbstract implements DomainEventInterface
     /**
      * Copy from Symfony maker str.
      *
-     * @param $fullClassName
+     * @param string $fullClassName
      * @return string
      */
-    public static function getShortClassName($fullClassName): string
+    public static function getShortClassName(string $fullClassName): string
     {
         if (empty(self::getNamespace($fullClassName))) {
             return $fullClassName;
@@ -55,7 +55,8 @@ abstract class DomainEventAbstract implements DomainEventInterface
      */
     public static function getNamespace(string $fullClassName): string
     {
-        return substr($fullClassName, 0, strrpos($fullClassName, '\\'));
+        $pos = strrpos($fullClassName, '\\');
+        return substr($fullClassName, 0, $pos !== false ? $pos : null);
     }
 
     public function getEventId(): EventId

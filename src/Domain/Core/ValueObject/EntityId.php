@@ -9,7 +9,7 @@ use Symfony\Component\Uid\Uuid;
 
 abstract class EntityId implements EntityIdInterface, JsonSerializable
 {
-    protected function __construct(private readonly string $uuid)
+    final protected function __construct(private readonly string $uuid)
     {
     }
 

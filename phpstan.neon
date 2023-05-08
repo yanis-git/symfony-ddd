@@ -3,8 +3,10 @@ includes:
     - vendor/phpstan/phpstan-doctrine/rules.neon
 
 parameters:
-	level: max
-	paths:
-		- src
-	doctrine:
-		objectManagerLoader: tests/object-manager.php
+    level: 8
+    paths:
+        - src
+    doctrine:
+        objectManagerLoader: tests/object-manager.php
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false

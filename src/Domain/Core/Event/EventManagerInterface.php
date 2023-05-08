@@ -24,5 +24,5 @@ interface EventManagerInterface
     /*
      * stop track for an aggregate
      */
-    public function detach(AggregateRootAbstract $aggregateRoot);
+    public function detach(AggregateRootAbstract $aggregateRoot): void;
 }
