@@ -37,20 +37,20 @@ it('should be hydratable manually', function (
         ->setPayload($payload)
         ->setVersion($version)
     ;
-    expect($this->event->getUuid())->toBe($uuid);
-    expect($this->event->getAggregateClass())->toBe($aggregateClass);
-    expect($this->event->getEventClass())->toBe($eventClass);
-    expect($this->event->getEventName())->toBe($eventName);
-    expect($this->event->getAggregateId())->toBe($aggregateId);
-    expect($this->event->getPayload())->toBe($payload);
-    expect($this->event->getVersion())->toBe($version);
+    expect($this->event->getUuid())->toBe($uuid)
+        ->and($this->event->getAggregateClass())->toBe($aggregateClass)
+        ->and($this->event->getEventClass())->toBe($eventClass)
+        ->and($this->event->getEventName())->toBe($eventName)
+        ->and($this->event->getAggregateId())->toBe($aggregateId)
+        ->and($this->event->getPayload())->toBe($payload)
+        ->and($this->event->getVersion())->toBe($version);
 })->with('userWasCreated');
 
 it('should seed created at and updated at on first persistance', function () {
    $this->event->onPrePersist();
    $now = (new DateTime())->format('Y-m-d hh:mm:ss');
-   expect($this->event->getCreatedAt()->format('Y-m-d hh:mm:ss'))->toBe($now);
-   expect($this->event->getUpdatedAt()->format('Y-m-d hh:mm:ss'))->toBe($now);
+   expect($this->event->getCreatedAt()->format('Y-m-d hh:mm:ss'))->toBe($now)
+       ->and($this->event->getUpdatedAt()->format('Y-m-d hh:mm:ss'))->toBe($now);
 });
 
 it('should seed updated at on update', function () {
