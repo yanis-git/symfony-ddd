@@ -1,5 +1,5 @@
 lint:
-	tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src
+	PHP_CS_FIXER_IGNORE_ENV=true tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src
 
 setup:
 	composer install
