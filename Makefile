@@ -16,3 +16,9 @@ serve:
 
 analyse:
 	php vendor/bin/phpstan analyse --level=8 --no-progress --no-interaction src
+
+up:
+	docker-compose exec up
+
+shell:
+	docker-compose exec php bash
