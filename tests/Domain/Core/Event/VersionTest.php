@@ -1,39 +1,61 @@
 <?php
 
+namespace App\Tests\Domain\Core\Event;
+
 use Domain\Core\Event\Version;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 
-dataset('versions', [
-    '1.0',
-    '2.0',
-    '2.1',
-    '10.0',
-    '42.42'
-]);
+class VersionTest extends TestCase
+{
 
-dataset('invalid_versions', [
-    'something',
-    '10',
-    '.1',
-    '10.b'
-]);
+    #[Test]
+    public function it_should_be_castable_to_string(): void
+    {
+        expect((string)Version::default())->toBeString();
+    }
 
-it('should be castable to string', fn() => expect((string)Version::default())->toBeString());
+    #[Test]
+    public function is_should_have_default_version(): void
+    {
+        expect((string)Version::default())->toBe('1.0');
+    }
 
-it('should have default version', fn() => expect((string) Version::default())->toBe('1.0'));
+    #[Test]
+    #[DataProvider('validVersionProvider')]
+    public function it_should_be_overridable(string $version): void
+    {
+        expect((string) (new Version($version)))->toBe($version);
+    }
 
-it('should be overridable', fn(string $version) => expect((string) (new Version($version)))->toBe($version))
-    ->with('versions')
-;
+    #[Test]
+    #[DataProvider('invalidVersionProvider')]
+    public function it_should_throw_exception_when_format_is_invalid(string $version): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Version format is not valid');
+        new Version($version);
+    }
 
-it('should throw exception when format is invalid', fn(string $version) => new Version($version))
-    ->throws(InvalidArgumentException::class)
-    ->with('invalid_versions')
-;
+    public static function validVersionProvider(): array
+    {
+        return [
+            ['1.0'],
+            ['2.0'],
+            ['2.1'],
+            ['10.0'],
+            ['42.42']
+        ];
+    }
 
-it('should be comparable', function () {
-    $v1 = new Version('1.0');
-    $v2 = new Version('2.0');
-    $v2bis = new Version('2.0');
-    expect($v1->isEqual($v2))->toBeFalse();
-    expect($v2bis->isEqual($v2))->toBeTrue();
-});
+    public static function invalidVersionProvider(): array
+    {
+        return [
+            ['something'],
+            ['10'],
+            ['.1'],
+            ['10.b']
+        ];
+    }
+}

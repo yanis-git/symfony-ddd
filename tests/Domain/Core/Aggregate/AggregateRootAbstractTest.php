@@ -1,50 +1,70 @@
 <?php
 
+namespace App\Tests\Domain\Core\Aggregate;
+
 use App\Tests\Sample\Domain\User\User;
 use App\Tests\Sample\Domain\User\UserId;
 use Domain\Core\Contract\DomainEntityInterface;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 
-beforeEach(function () {
-    $this->userId = UserId::fromString('6eadc797-c7a8-4c8c-b20d-71c8017c9163');
-    $this->user = new User($this->userId);
-});
+class AggregateRootAbstractTest extends TestCase
+{
+    private UserId $userId;
+    private User $user;
 
-it('should implement Domain Entity Interface', fn() => expect($this->user)->toBeInstanceOf(DomainEntityInterface::class));
-it('should return not have any events by default', function() {
- expect(count($this->user->getRecordedEvents()))
-     ->toBe(0)
-     ->and($this->user->hasEvents())
-     ->toBe(false)
- ;
-});
-it ('should be able to record events', function() {
-    $user = User::create();
-    expect(count($user->getRecordedEvents()))
-        ->toBe(1)
-        ->and($user->hasEvents())
-        ->toBe(true)
-    ;
-});
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->userId = UserId::fromString('6eadc797-c7a8-4c8c-b20d-71c8017c9163');
+        $this->user = new User($this->userId);
+    }
 
-it('should be able to serialize', function() {
-    expect(json_encode($this->user))
-        ->json()
-        ->toHaveCount(2)
-        ->uuid->toBe('6eadc797-c7a8-4c8c-b20d-71c8017c9163')
-        ->foo->toBe('bar')
-    ;
-});
+    #[Test]
+    public function it_should_implement_entity_interface(): void
+    {
+        $this->assertInstanceOf(DomainEntityInterface::class, $this->user);
+    }
 
-it('should be able to clear the recorded events', function() {
-    $user = User::create();
-    $user->clearRecordedEvents();
-    expect(count($user->getRecordedEvents()))
-        ->toBe(0)
-        ->and($this->user->hasEvents())
-        ->toBe(false)
-    ;
-});
+    #[Test]
+    public function it_should_be_able_to_record_events(): void
+    {
+        $user = User::create();
+        $this->assertCount(1, $user->getRecordedEvents());
+        $this->assertTrue($user->hasEvents());
+    }
 
-it('should return uuid when we cast to string', function() {
-    expect((string)$this->user)->toBe('6eadc797-c7a8-4c8c-b20d-71c8017c9163');
-});
+    #[Test]
+    public function it_should_be_able_to_clear_recorded_events(): void
+    {
+        $user = User::create();
+        $user->clearRecordedEvents();
+
+        $this->assertCount(0, $user->getRecordedEvents());
+        $this->assertFalse($user->hasEvents());
+    }
+
+    #[Test]
+    public function it_should_be_able_to_serialize(): void
+    {
+        $json = json_encode($this->user);
+        $this->assertJson($json);
+        $this->assertEquals([
+            'uuid' => '6eadc797-c7a8-4c8c-b20d-71c8017c9163',
+            'foo' => 'bar',
+        ], json_decode($json, true));
+    }
+
+    #[Test]
+    public function it_should_not_have_any_events_by_default(): void
+    {
+        $this->assertCount(0, $this->user->getRecordedEvents());
+        $this->assertFalse($this->user->hasEvents());
+    }
+
+    #[Test]
+    public function it_should_return_uuid_when_cast_to_string(): void
+    {
+        $this->assertEquals('6eadc797-c7a8-4c8c-b20d-71c8017c9163', (string) $this->user);
+    }
+}

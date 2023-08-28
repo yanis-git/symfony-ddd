@@ -1,47 +1,72 @@
 <?php
 
-use Domain\Core\Contract\EntityIdInterface;
+namespace App\Tests\Domain\Core\ValueObject;
+
 use Domain\Core\ValueObject\EntityId;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
+use Domain\Core\Contract\EntityIdInterface;
 
+class EntityIdTest extends TestCase
+{
+    private string $uuid;
+    private EntityId $elementId;
 
-beforeEach(function () {
-    $this->uuid = '6eadc797-c7a8-4c8c-b20d-71c8017c9163';
-    $this->elementId = ElementId::fromString($this->uuid);
-});
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->uuid = '6eadc797-c7a8-4c8c-b20d-71c8017c9163';
+        $this->elementId = ElementId::fromString($this->uuid);
+    }
 
-it('Should be able to create an Entity Id from a string', function () {
-    expect((string) $this->elementId)->toBe($this->uuid);
-});
+    #[Test]
+    public function it_should_be_able_to_create_an_Entity_Id_from_string(): void
+    {
+        $this->assertEquals($this->uuid, (string) $this->elementId);
+    }
 
-it('Should be serializable', function () {
-    expect(json_encode($this->elementId))->toBe(json_encode($this->uuid));
-});
+    #[Test]
+    public function it_should_be_serializable(): void
+    {
+        $this->assertEquals(json_encode($this->uuid), json_encode($this->elementId));
+    }
 
-it('Should throw Exception when from String is call with invalid uuid', function () {
-    expect(fn() => ElementId::fromString('invalid-uuid'))
-        ->toThrow(InvalidArgumentException::class, 'invalid-uuid is not valid UUID');
-});
+    #[Test]
+     public function it_should_throw_Exception_when_from_String_is_call_with_invalid_uuid(): void
+     {
+          $this->expectException(\InvalidArgumentException::class);
+          $this->expectExceptionMessage('invalid-uuid is not valid UUID');
+          ElementId::fromString('invalid-uuid');
+     }
 
-it('Should validate the uuid format', function () {
-    $invalidUuid = 'invalid-uuid';
-    expect(ElementId::isValid($invalidUuid))->toBe(false);
-    expect(ElementId::isValid($this->uuid))->toBe(true);
-});
+    #[Test]
+    public function it_should_validate_the_uuid_format(): void
+    {
+        $invalidUuid = 'invalid-uuid';
+        $this->assertFalse(ElementId::isValid($invalidUuid));
+        $this->assertTrue(ElementId::isValid($this->uuid));
+    }
 
-it('Should be able to compare two Entity Ids', function () {
-    $otherElementId = ElementId::fromString($this->uuid);
-    expect($this->elementId->equals($otherElementId))->toBe(true);
-});
+    #[Test]
+    public function it_should_be_able_to_compare_two_Entity_Ids(): void
+    {
+        $otherElementId = ElementId::fromString($this->uuid);
+        $this->assertTrue($this->elementId->equals($otherElementId));
+    }
 
-it('Should be able to generate valid UUID', function () {
-    $uuid = ElementId::generate();
-    expect(ElementId::isValid($uuid))->toBe(true);
-});
+    #[Test]
+    public function it_should_be_able_to_generate_valid_UUID(): void
+    {
+        $uuid = ElementId::generate();
+        $this->assertTrue(ElementId::isValid($uuid));
+    }
 
-it('Should implement Entity Id Interface', function () {
-    expect($this->elementId)->toBeInstanceOf(EntityIdInterface::class);
-});
-
+    #[Test]
+    public function it_should_implement_Entity_Id_Interface(): void
+    {
+        $this->assertInstanceOf(EntityIdInterface::class, $this->elementId);
+    }
+}
 
 class ElementId extends EntityId {
 
