@@ -26,7 +26,4 @@ jobs:
 
       - name: Lint, test and build
         run: |
-          make setup
-          make lint
-          make analyse
-          make test
+          make ci

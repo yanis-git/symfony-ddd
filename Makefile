@@ -24,3 +24,8 @@ shell:
 
 rector:
 	docker-compose exec php vendor/bin/rector process
+
+ci:
+	composer install && \
+	php vendor/bin/phpstan analyse --level=8 --no-progress --no-interaction src && \
+	php -d xdebug.mode=coverage vendor/bin/phpunit tests
